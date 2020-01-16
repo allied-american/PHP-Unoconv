@@ -1,5 +1,5 @@
 {
-    "name": "php-unoconv/php-unoconv",
+    "name": "ogrygorash/php-unoconv",
     "type": "library",
     "description": "Unoconv PHP, an Object Oriented library for easy file conversion with LibreOffice's unoconv",
     "keywords": ["unoconv"],
@@ -18,7 +18,7 @@
     ],
     "require": {
         "php"                   : "~7.0",
-        "alchemy/binary-driver" : "~4.1"
+        "alchemy/binary-driver" : "~5.1"
     },
     "require-dev": {
         "phpunit/phpunit"       : "~6.0",
