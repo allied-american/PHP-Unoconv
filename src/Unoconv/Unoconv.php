@@ -52,7 +52,7 @@ class Unoconv extends AbstractBinary
 
         $arguments = array(
             '--format=' . $format,
-            '--stdout'
+            '--output=' . $outputFile,
         );
 
         if (preg_match('/\d+-\d+/', $pageRange)) {
@@ -63,18 +63,13 @@ class Unoconv extends AbstractBinary
         $arguments[] = $input;
 
         try {
-            $output = $this->command($arguments);
+            $this->command($arguments);
         } catch (ExecutionFailureException $e) {
             throw new RuntimeException(
                 'Unoconv failed to transcode file', $e->getCode(), $e
             );
         }
 
-        if (!is_writable(dirname($outputFile)) || !file_put_contents($outputFile, $output)) {
-            throw new RuntimeException(sprintf(
-                'Unable to write to output file `%s`', $outputFile
-            ));
-        }
 
         return $this;
     }
