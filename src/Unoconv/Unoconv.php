@@ -32,7 +32,7 @@ class Unoconv extends AbstractBinary
     }
 
     /**
-     * Transcodes a file to another format
+     * Converts a file to another format
      *
      * @param string $input      The path to the input file
      * @param string $format     The output format
@@ -44,7 +44,7 @@ class Unoconv extends AbstractBinary
      * @throws InvalidFileArgumentException In case the input file is not readable or does not exist
      * @throws RuntimeException             In case the output file can not be written, or the process failes
      */
-    public function transcode($input, $format, $outputFile, $pageRange = null)
+    public function convert($input, $format, $outputFile, $pageRange = null)
     {
         if (!file_exists($input)) {
             throw new InvalidFileArgumentException(sprintf('File %s does not exists', $input));
@@ -66,7 +66,7 @@ class Unoconv extends AbstractBinary
             $this->command($arguments);
         } catch (ExecutionFailureException $e) {
             throw new RuntimeException(
-                'Unoconv failed to transcode file', $e->getCode(), $e
+                'Unoconv failed to convert file', $e->getCode(), $e
             );
         }
 

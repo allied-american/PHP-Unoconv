@@ -43,18 +43,18 @@ $unoconv = Unoconv\Unoconv::create(array(
 ), $logger);
 ```
 
-To transcode a file, use the `transcode` method. For the complete format list
+To convert a file, use the `convert` method. For the complete format list
 supported by unoconv, refer to the unoconv CLI.
 
 ```php
-$unoconv->transcode('document.docx', 'pdf', 'document.pdf');
+$unoconv->convert('document.docx', 'pdf', 'document.pdf');
 ```
 
-You can optionaly transcode a given page range using the fourth argument :
+You can optionaly convert a given page range using the fourth argument :
 
 ```php
 // pages 1 to 14
-$unoconv->transcode('document.docx', 'pdf', 'document.pdf', '1-14');
+$unoconv->convert('document.docx', 'pdf', 'document.pdf', '1-14');
 ```
 
 ## Silex Service Provider

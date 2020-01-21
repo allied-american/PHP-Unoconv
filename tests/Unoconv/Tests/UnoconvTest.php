@@ -53,7 +53,7 @@ class UnoconvTest extends BinaryDriverTestCase
         $this->assertEquals($conf, $unoconv->getConfiguration());
     }
 
-    public function testTranscode()
+    public function testConvert()
     {
         $dest = 'Hello.pdf';
 
@@ -65,14 +65,14 @@ class UnoconvTest extends BinaryDriverTestCase
             __DIR__ . '/../../files/Hello.odt'
         ));
 
-        $Unoconv->transcode(__DIR__ . '/../../files/Hello.odt', 'pdf', $dest);
+        $Unoconv->convert(__DIR__ . '/../../files/Hello.odt', 'pdf', $dest);
 
         $this->assertTrue(file_exists($dest));
         $this->assertEquals($rand, file_get_contents($dest));
         unlink($dest);
     }
 
-    public function testTranscodeWithPageRange()
+    public function testConvertWithPageRange()
     {
         $dest = 'Hello.pdf';
 
@@ -86,7 +86,7 @@ class UnoconvTest extends BinaryDriverTestCase
             __DIR__ . '/../../files/Hello.odt'
         ));
 
-        $Unoconv->transcode(__DIR__ . '/../../files/Hello.odt', 'pdf', $dest, '1-14');
+        $Unoconv->convert(__DIR__ . '/../../files/Hello.odt', 'pdf', $dest, '1-14');
 
         $this->assertTrue(file_exists($dest));
         $this->assertEquals($rand, file_get_contents($dest));
@@ -96,7 +96,7 @@ class UnoconvTest extends BinaryDriverTestCase
     /**
      * @expectedException \Unoconv\Exception\RuntimeException
      */
-    public function testTranscodeInvalidDest()
+    public function testConvertInvalidDest()
     {
         $dest = '/tmp/' . mt_rand(10000, 99999) . '/Hello.pdf';
 
@@ -107,13 +107,13 @@ class UnoconvTest extends BinaryDriverTestCase
             __DIR__ . '/../../files/Hello.odt'
         ));
 
-        $Unoconv->transcode(__DIR__ . '/../../files/Hello.odt', 'pdf', $dest);
+        $Unoconv->convert(__DIR__ . '/../../files/Hello.odt', 'pdf', $dest);
     }
 
     /**
      * @expectedException \Unoconv\Exception\RuntimeException
      */
-    public function testTranscodeWithoutFile()
+    public function testConvertWithoutFile()
     {
         $process = $this->getMockBuilder('Symfony\Component\Process\Process')
             ->disableOriginalConstructor()
@@ -129,20 +129,20 @@ class UnoconvTest extends BinaryDriverTestCase
             __DIR__ . '/../../files/Hello.odt'
         ));
 
-        $unoconv->transcode(__DIR__ . '/../../files/Hello.odt', 'pdf', 'Hello.pdf');
+        $unoconv->convert(__DIR__ . '/../../files/Hello.odt', 'pdf', 'Hello.pdf');
     }
 
     /**
      * @expectedException \Unoconv\Exception\InvalidFileArgumentException
      */
-    public function testTranscodeWithInvalidFile()
+    public function testConvertWithInvalidFile()
     {
         $factory = $this->createProcessBuilderFactoryMock();
         $configuration = $this->createConfigurationMock();
         $logger = $this->createLoggerMock();
 
         $unoconv = new Unoconv($factory, $logger, $configuration);
-        $unoconv->transcode('/path/to/nofile', 'pdf', 'hello.pdf');
+        $unoconv->convert('/path/to/nofile', 'pdf', 'hello.pdf');
     }
 
     private function getUnoconv($process, $args)
